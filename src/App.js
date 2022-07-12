@@ -1,3 +1,3 @@
 import "./App.css";
-
-export const App = () => <div>go scrum</div>;
+import { Login } from "./components/Login/Login";
+export const App = () => <Login />;
