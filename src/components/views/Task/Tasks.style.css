@@ -1,0 +1,45 @@
+#tasks {
+  padding: 20px 15px 5px;
+}
+#tasks .wrapper_list {
+  background-color: #fafafa;
+  border-radius: var(--global-border-radius);
+  height: calc(100vh - 100px);
+}
+#tasks .wrapper_list h2 {
+  font-size: 1rem;
+  margin: 0;
+}
+.list {
+  width: 100%;
+}
+#tasks .wrapper_list .list_group {
+  display: flex;
+  flex-direction: row;
+  gap: 5px 10px;
+}
+#tasks .wrapper_list .list_group .list h4 {
+  font-size: 1.2rem;
+  margin: 0 0 5px;
+}
+#tasks .card {
+  background-color: #fff;
+  border: var(--global--border);
+  border-radius: 12px;
+  margin-bottom: 0.8rem;
+  padding: 0.8rem 1.1rem 0.9rem;
+  position: relative;
+  transition: transform 0.2s ease-out;
+}
+#tasks .card .close {
+  cursor: pointer;
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  font-size: 18px;
+}
+#tasks .card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 0.2rem;
+}
