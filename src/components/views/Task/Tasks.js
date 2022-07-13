@@ -1,5 +1,3 @@
-export const Tasks = () => (
-  <div className="container">
-    <h1>Task</h1>
-  </div>
-);
+import { Header } from "../../Header.js/Header";
+
+export const Tasks = () => <Header />;
