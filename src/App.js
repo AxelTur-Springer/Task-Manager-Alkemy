@@ -3,8 +3,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Login } from "./components/Login/Login";
 import { Register } from "./components/Register/Register";
-import { Error404 } from "./components/views/Error404/Error404";
 import { Tasks } from "./components/views/Task/Tasks";
+import { lazy, Suspense } from "react";
+
+const Error404 = lazy(() => import("./components/views/Error404/Error404"));
+
 const RequireAuth = ({ children }) => {
   if (!localStorage.getItem("logged")) {
     return <Navigate to="/login" replace={true} />;
@@ -72,7 +75,9 @@ export const App = () => {
               exit="out"
               variants={pageTransition}
             >
-              <Error404 />
+              <Suspense fallback={<>...</>}>
+                <Error404 />
+              </Suspense>
             </motion.div>
           }
         />
