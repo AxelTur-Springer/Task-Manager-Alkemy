@@ -5,12 +5,12 @@ import * as Yup from "yup";
 import { v4 as uuidv4 } from "uuid";
 import { Switch, FormControlLabel } from "@mui/material";
 import "../Auth.style.css";
-
+const { REACT_APP_API_ENDPOINT } = process.env;
 export const Register = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    fetch("https://goscrum-api.alkemy.org/auth/data")
+    fetch(REACT_APP_API_ENDPOINT + "/auth/data")
       .then((response) => response.json())
       .then((data) => {
         setData(data.result);
@@ -50,7 +50,7 @@ export const Register = () => {
   };
   const onSubmit = () => {
     const teamID = !values.teamID ? uuidv4() : values.teamID;
-    fetch("https://goscrum-api.alkemy.org/auth/register", {
+    fetch(REACT_APP_API_ENDPOINT + "/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export const Register = () => {
     })
       .then((response) => response.json())
       .then((data) =>
-        navigate("/registered" + data?.results?.user?.teamID, { replace: true })
+        navigate("/registered/" + data?.result?.user?.teamID, { replace: true })
       );
   };
 
@@ -144,7 +144,7 @@ export const Register = () => {
           }
           label="Perteneces a un equipo ya creado"
         />
-        {!values.switch && (
+        {values.switch && (
           <div>
             <label>Por Favor,introduce el identificador de equipo</label>
             <input
