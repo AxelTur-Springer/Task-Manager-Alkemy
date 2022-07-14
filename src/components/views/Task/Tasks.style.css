@@ -1,6 +1,7 @@
 #tasks {
   padding: 20px 15px 5px;
 }
+
 #tasks .wrapper_list {
   background-color: #fafafa;
   border-radius: var(--global-border-radius);
