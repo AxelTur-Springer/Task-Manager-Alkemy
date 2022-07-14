@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Login } from "./components/views/auth/Login/Login";
 import { Register } from "./components/views/auth/Register/Register";
+import { Registered } from "./components/views/Registered/Registered";
 import { Tasks } from "./components/views/Task/Tasks";
 import { lazy, Suspense } from "react";
 
@@ -62,6 +63,20 @@ export const App = () => {
               variants={pageTransition}
             >
               <Register />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/registered/:teamID"
+          element={
+            <motion.div
+              className="page"
+              initial="out"
+              animate="in"
+              exit="out"
+              variants={pageTransition}
+            >
+              <Registered />
             </motion.div>
           }
         />
