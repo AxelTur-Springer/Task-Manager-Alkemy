@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
 import "../Auth.style.css";
 
 export const Register = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch("https://goscrum-api.alkemy.org/auth/data")
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data.result);
+      });
+  }, []);
+  console.log(data);
   const initialValues = {
     username: "",
     password: "",
@@ -25,7 +35,7 @@ export const Register = () => {
     email: Yup.string()
       .email("Debe utilizar un email valido")
       .required(required),
-    teamID: Yup.string().required(required),
+    //teamID: Yup.string().required(required),
     role: Yup.string().required(required),
     continent: Yup.string().required(required),
     region: Yup.string().required(required),
@@ -49,7 +59,7 @@ export const Register = () => {
           <input
             type="text"
             name="username"
-            value={values.userName}
+            value={values.username}
             onChange={handleChange}
             onBlur={handleBlur}
             className={errors.username && touched.username ? "error" : ""}
@@ -97,8 +107,11 @@ export const Register = () => {
             className={errors.role && touched.role ? "error" : ""}
           >
             <option value="">Seleccionar rol...</option>
-            <option value="Team Member">Team Member</option>
-            <option value="Team Lider">Team Lider</option>
+            {data.Rol?.map((option) => (
+              <option value={option} key={option}>
+                {option}
+              </option>
+            ))}
           </select>
           {errors.role && touched.role && (
             <span className="error-message">{errors.role}</span>
@@ -114,33 +127,39 @@ export const Register = () => {
             className={errors.continent && touched.continent ? "error" : ""}
           >
             <option value="">Seleccionar continente...</option>
-            <option value="America">America</option>
-            <option value="Europa">Europa</option>
-            <option value="Otro">Otro</option>
+            {data.continente?.map((option) => (
+              <option value={option} key={option}>
+                {option}
+              </option>
+            ))}
           </select>
           {errors.continent && touched.continent && (
             <span className="error-message">{errors.continent}</span>
           )}{" "}
         </div>
-        <div>
-          <label>Region</label>
-          <select
-            name="region"
-            value={values.region}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            className={errors.region && touched.region ? "error" : ""}
-          >
-            <option value="">Seleccionar region...</option>
-            <option value="Latam">Latam</option>
-            <option value="Brasil">Brasil</option>
-            <option value="America del Norte">America del Norte</option>
-            <option value="Otro">Otro</option>
-          </select>
-          {errors.region && touched.region && (
-            <span className="error-message">{errors.region}</span>
-          )}{" "}
-        </div>
+        {values.continent === "America" && (
+          <div>
+            <label>Region</label>
+            <select
+              name="region"
+              value={values.region}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className={errors.region && touched.region ? "error" : ""}
+            >
+              <option value="">Seleccionar region...</option>
+              {data.region?.map((option) => (
+                <option value={option} key={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            {errors.region && touched.region && (
+              <span className="error-message">{errors.region}</span>
+            )}{" "}
+          </div>
+        )}
+
         <div>
           <button type="submit">Enviar</button>
         </div>
