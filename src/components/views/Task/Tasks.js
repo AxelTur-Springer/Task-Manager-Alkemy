@@ -3,6 +3,7 @@ import { Header } from "../../Header.js/Header";
 import { TaskForm } from "../../TaskForm/TaskForm";
 import { useResize } from "../../../hooks/useResize";
 import { Card } from "../../Card/Card";
+import debounce from "lodash.debounce";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "./Tasks.style.css";
@@ -21,6 +22,7 @@ export const Tasks = () => {
   const [renderList, setRenderList] = useState(null);
   const [tasksFromWho, setTasksFromWho] = useState("ALL");
   const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const { isPhone } = useResize();
 
   useEffect(() => {
@@ -39,6 +41,18 @@ export const Tasks = () => {
       });
   }, [tasksFromWho]);
 
+  useEffect(() => {
+    if (searchTerm) {
+      setRenderList(
+        list.filter((data) =>
+          data.title.toLowerCase().startsWith(searchTerm.toLowerCase())
+        )
+      );
+    } else {
+      setRenderList(list);
+    }
+  }, [searchTerm]);
+
   const limitString = (str) => {
     if (str.length > 370)
       return { string: str.slice(0, 367).concat("..."), addButton: true };
@@ -49,21 +63,9 @@ export const Tasks = () => {
     return renderList?.map((data) => <Card key={data._id} data={data} />);
   };
 
-  const renderNewCards = () => {
+  const renderColumnCards = (text) => {
     return renderList
-      ?.filter((data) => data.status === "NEW")
-      .map((data) => <Card key={data._id} data={data} />);
-  };
-
-  const renderInProgressCards = () => {
-    return renderList
-      ?.filter((data) => data.status === "IN PROGRESS")
-      .map((data) => <Card key={data._id} data={data} />);
-  };
-
-  const renderFinishedCards = () => {
-    return renderList
-      ?.filter((data) => data.status === "FINISHED")
+      ?.filter((data) => data.status === text)
       .map((data) => <Card key={data._id} data={data} />);
   };
 
@@ -76,6 +78,10 @@ export const Tasks = () => {
       );
     }
   };
+
+  const handleSearch = debounce((e) => {
+    setSearchTerm(e?.target?.value);
+  }, 1000);
 
   return (
     <>
@@ -107,6 +113,13 @@ export const Tasks = () => {
                 />
               </RadioGroup>
             </FormControl>
+            <div className="search">
+              <input
+                type="text"
+                placeholder=" Buscar por titulo..."
+                onChange={handleSearch}
+              />
+            </div>
             <select name="importance" onChange={handleChangeImportance}>
               <option value="">Selecionar una prioridad</option>
               <option value="ALL">Todas</option>
@@ -141,15 +154,15 @@ export const Tasks = () => {
                 <>
                   <div className="list">
                     <h4>Nuevas</h4>
-                    {renderNewCards()}
+                    {renderColumnCards("NEW")}
                   </div>
                   <div className="list">
                     <h4>En proceso</h4>
-                    {renderInProgressCards()}
+                    {renderColumnCards("IN PROGRESS")}
                   </div>
                   <div className="list">
                     <h4>Finalizadas</h4>
-                    {renderFinishedCards()}
+                    {renderColumnCards("FINISHED")}
                   </div>
                 </>
               )}
