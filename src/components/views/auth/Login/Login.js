@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { swalAlert } from "../../../../utils/Alert";
 import "../Auth.style.css";
 
 const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env;
@@ -37,8 +38,12 @@ export const Login = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        localStorage.setItem("token", data?.result?.token);
-        navigate("/", { replace: true });
+        if (data.status_code === 200) {
+          localStorage.setItem("token", data?.result?.token);
+          navigate("/", { replace: true });
+        } else {
+          swalAlert();
+        }
       });
   };
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
