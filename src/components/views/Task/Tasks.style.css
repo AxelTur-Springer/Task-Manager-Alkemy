@@ -14,11 +14,11 @@
 .list {
   width: 33.33%;
 }
+
 #tasks .wrapper_list .list_group {
   display: flex;
   flex-direction: row;
   gap: 5px 10px;
-
 }
 #tasks .wrapper_list .list_group .list h4 {
   font-size: 1.2rem;
@@ -34,7 +34,6 @@
   transition: transform 0.2s ease-out;
   border: solid red;
   word-wrap: break-word;
-
 }
 #tasks .card .close {
   cursor: pointer;
@@ -48,41 +47,42 @@
   font-weight: 700;
   margin: 0 0 0.2rem;
 }
-#tasks .card button.finished{
+#tasks .card button.finished {
   background-color: #1ec876;
   border-color: #1ec876;
 }
-#tasks .card button.finished:hover{
+#tasks .card button.finished:hover {
   background-color: white;
   border-color: #1ec876;
 }
-#tasks .card button.low{
+#tasks .card button.low {
   background-color: #007bff;
   border-color: #007bff;
 }
-#tasks .card button.low:hover{
+#tasks .card button.low:hover {
   background-color: white;
   border-color: #007bff;
 }
 #tasks .card button.medium,
-#tasks .card button.progress{
+#tasks .card button.progress {
   background-color: #fbde3f;
   border-color: #fbde3f;
   color: black;
 }
 #tasks .card button.medium:hover,
-#tasks .card button.progress:hover{
+#tasks .card button.progress:hover {
   background-color: black;
   color: #fbde3f;
 }
 @media screen and (min-width: 900px) {
   #tasks {
-display: flex;  }
-.task-form{
-  flex: none;
-  width:50%;
-}
-.wrapper_list{
-  width: 50%;
-}
+    display: flex;
+  }
+  .task-form {
+    flex: none;
+    width: 50%;
+  }
+  .wrapper_list {
+    width: 50%;
+  }
 }
