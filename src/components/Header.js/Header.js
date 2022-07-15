@@ -6,12 +6,17 @@ export const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userName");
+
     navigate("/login", { replace: true });
   };
   return (
     <header>
-      <span>GO sCRUM</span>
-      <div onClick={handleLogout}>x</div>
+      <span>GO SCRUM</span>
+      <div className="wrapper_right_header">
+        <div>{localStorage.getItem("userName")}</div>
+        <div onClick={handleLogout}>x</div>
+      </div>
     </header>
   );
 };

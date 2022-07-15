@@ -10,3 +10,10 @@ header > img{
 header > div{   
     cursor: pointer;
 }
+.wrapper_right_header{
+    display: flex;
+    flex-direction: row;
+}
+.wrapper_right_header div:first-child{
+    padding-right: 10px;
+}

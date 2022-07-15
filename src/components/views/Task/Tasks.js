@@ -6,16 +6,26 @@ import { Card } from "../../Card/Card";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "./Tasks.style.css";
+import {
+  Radio,
+  FormControl,
+  RadioGroup,
+  FormControlLabel,
+  FormLabel,
+} from "@mui/material";
+
 const { REACT_APP_API_ENDPOINT: API_END_POINT } = process.env;
 
 export const Tasks = () => {
   const [list, setList] = useState(null);
+  const [renderList, setRenderList] = useState(null);
+  const [tasksFromWho, setTasksFromWho] = useState("ALL");
   const [loading, setLoading] = useState(false);
   const { isPhone } = useResize();
 
   useEffect(() => {
     setLoading(true);
-    fetch(API_END_POINT + "/task", {
+    fetch(`${API_END_POINT}/task${tasksFromWho === "ME" ? "/me" : ""}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -24,33 +34,47 @@ export const Tasks = () => {
       .then((response) => response.json())
       .then((data) => {
         setList(data.result);
-        setTimeout(() => {
-          setLoading(false);
-        }, 5000);
+        setRenderList(data.result);
+        setLoading(false);
       });
-  }, []);
+  }, [tasksFromWho]);
+
   const limitString = (str) => {
     if (str.length > 370)
       return { string: str.slice(0, 367).concat("..."), addButton: true };
     return { string: str, addButton: false };
   };
+
   const renderAllCards = () => {
-    return list?.map((data) => <Card key={data._id} data={data} />);
+    return renderList?.map((data) => <Card key={data._id} data={data} />);
   };
+
   const renderNewCards = () => {
-    return list
+    return renderList
       ?.filter((data) => data.status === "NEW")
       .map((data) => <Card key={data._id} data={data} />);
   };
+
   const renderInProgressCards = () => {
-    return list
+    return renderList
       ?.filter((data) => data.status === "IN PROGRESS")
       .map((data) => <Card key={data._id} data={data} />);
   };
+
   const renderFinishedCards = () => {
-    return list
+    return renderList
       ?.filter((data) => data.status === "FINISHED")
       .map((data) => <Card key={data._id} data={data} />);
+  };
+
+  const handleChangeImportance = (e) => {
+    if (e.currentTarget.value === "ALL") {
+      setRenderList(list);
+    } else {
+      setRenderList(
+        list.filter((data) => data.importance === e.currentTarget.value)
+      );
+    }
   };
 
   return (
@@ -62,8 +86,37 @@ export const Tasks = () => {
           <div className="list_header">
             <h2>Mis Tareas</h2>
           </div>
+          <div className="filters">
+            <FormControl>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-gripo-label"
+                onChange={(e) => {
+                  setTasksFromWho(e.currentTarget.value);
+                }}
+              >
+                <FormControlLabel
+                  value="ALL"
+                  control={<Radio />}
+                  label="Todas"
+                />
+                <FormControlLabel
+                  value="ME"
+                  control={<Radio />}
+                  label="Mis tareas"
+                />
+              </RadioGroup>
+            </FormControl>
+            <select name="importance" onChange={handleChangeImportance}>
+              <option value="">Selecionar una prioridad</option>
+              <option value="ALL">Todas</option>
+              <option value="LOW">Baja</option>
+              <option value="MEDIUM">Media</option>
+              <option value="HIGH">Alta</option>
+            </select>
+          </div>
           {isPhone ? (
-            !list?.length ? (
+            !renderList?.length ? (
               <div>No hay tareas creadas</div>
             ) : loading ? (
               <>
@@ -76,7 +129,7 @@ export const Tasks = () => {
             )
           ) : (
             <div className="list_group">
-              {!list?.length ? (
+              {!renderList?.length ? (
                 <div> No hay tareas creadas</div>
               ) : loading ? (
                 <>
