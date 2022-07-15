@@ -44,3 +44,15 @@
   font-weight: 700;
   margin: 0 0 0.2rem;
 }
+
+@media screen and (min-width: 900px) {
+  #tasks {
+display: flex;  }
+.task-form{
+  flex: none;
+  width:50%;
+}
+.wrapper_list{
+  width: 100%;
+}
+}

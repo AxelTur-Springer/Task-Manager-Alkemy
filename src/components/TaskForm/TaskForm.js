@@ -15,7 +15,6 @@ export const TaskForm = () => {
   };
 
   const onSubmit = () => {
-    console.log(values);
     fetch(API_END_POINT + "/task", {
       method: "POST",
       headers: {
