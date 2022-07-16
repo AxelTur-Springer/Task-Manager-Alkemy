@@ -20,6 +20,7 @@ export const TaskForm = () => {
 
   const onSubmit = (values) => {
     dispatch(addTasks(values));
+    resetForm();
   };
 
   const validationSchema = Yup.object().shape({
