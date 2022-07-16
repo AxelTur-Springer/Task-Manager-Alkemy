@@ -16,7 +16,6 @@ export const tasksFailure = (error) => ({
 });
 
 export const getTasks = (path) => (dispatch) => {
-  dispatch(tasksRequest());
   fetch(`${API_ENDPOINT}/task/${path}`, {
     headers: {
       "content-type": "application/json",
@@ -32,7 +31,6 @@ export const getTasks = (path) => (dispatch) => {
     });
 };
 export const deleteTasks = (id) => (dispatch) => {
-  dispatch(tasksRequest());
   fetch(`${API_ENDPOINT}/task/${id}`, {
     method: "DELETE",
     headers: {
@@ -55,7 +53,6 @@ export const editTaskStatus = (data) => (dispatch) => {
     statusArray.indexOf(data.status) > 1
       ? 0
       : statusArray.indexOf(data.status) + 1;
-  dispatch(tasksRequest());
   fetch(`${API_ENDPOINT}/task/${data._id}`, {
     method: "PATCH",
     headers: {
@@ -80,7 +77,6 @@ export const editTaskStatus = (data) => (dispatch) => {
     });
 };
 export const addTasks = (values) => (dispatch) => {
-  dispatch(tasksRequest());
   fetch(API_ENDPOINT + "/task", {
     method: "POST",
     headers: {

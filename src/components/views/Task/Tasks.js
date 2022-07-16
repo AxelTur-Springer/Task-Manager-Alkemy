@@ -22,8 +22,8 @@ import {
 } from "@mui/material";
 
 export const Tasks = () => {
-  const [list, setList] = useState([]);
-  const [renderList, setRenderList] = useState([]);
+  const [list, setList] = useState(null);
+  const [renderList, setRenderList] = useState(null);
   const [tasksFromWho, setTasksFromWho] = useState("ALL");
   const [searchTerm, setSearchTerm] = useState("");
   const { isPhone } = useResize();
@@ -42,7 +42,6 @@ export const Tasks = () => {
   useEffect(() => {
     setList(tasks);
     setRenderList(tasks);
-    console.log(tasks);
   }, [tasks]);
 
   //managing search
@@ -65,6 +64,7 @@ export const Tasks = () => {
   //rendering
 
   const renderAllCards = () => {
+    console.log(renderList);
     return renderList?.map((data) => (
       <Card
         key={data._id}
@@ -98,12 +98,14 @@ export const Tasks = () => {
       );
     }
   };
+  //handiling edits
   const handleDelete = (id) => {
     dispatch(deleteTasks(id));
   };
   const handleEditCardStatus = (data) => dispatch(editTaskStatus(data));
 
   if (error) return <div>Hay un error</div>;
+
   return (
     <>
       <Header />
