@@ -8,7 +8,7 @@ import debounce from "lodash.debounce";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "./Tasks.style.css";
-import { getTasks } from "../../../store/actions/taskActions";
+import { getTasks, deleteTasks } from "../../../store/actions/taskActions";
 import {
   Radio,
   FormControl,
@@ -42,8 +42,6 @@ export const Tasks = () => {
     }
   }, [tasks]);
 
-  if (error) return <div>Hay un error</div>;
-
   //managing search
   useEffect(() => {
     if (searchTerm) {
@@ -64,13 +62,17 @@ export const Tasks = () => {
   //rendering
 
   const renderAllCards = () => {
-    return renderList?.map((data) => <Card key={data._id} data={data} />);
+    return renderList?.map((data) => (
+      <Card key={data._id} data={data} deleteCard={handleDelete} />
+    ));
   };
 
   const renderColumnCards = (text) => {
     return renderList
       ?.filter((data) => data.status === text)
-      .map((data) => <Card key={data._id} data={data} />);
+      .map((data) => (
+        <Card key={data._id} data={data} deleteCard={handleDelete} />
+      ));
   };
 
   //setting changes in input radius
@@ -83,6 +85,10 @@ export const Tasks = () => {
       );
     }
   };
+  const handleDelete = (id) => {
+    dispatch(deleteTasks(id));
+  };
+  if (error) return <div>Hay un error</div>;
 
   return (
     <>

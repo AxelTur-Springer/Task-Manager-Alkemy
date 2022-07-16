@@ -31,3 +31,20 @@ export const getTasks = (path) => (dispatch) => {
       dispatch(tasksFailure(error));
     });
 };
+export const deleteTasks = (id) => (dispatch) => {
+  dispatch(tasksRequest());
+  fetch(`${API_ENDPOINT}/task/${id}`, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      dispatch(getTasks(""));
+    })
+    .catch((error) => {
+      dispatch(tasksFailure(error));
+    });
+};

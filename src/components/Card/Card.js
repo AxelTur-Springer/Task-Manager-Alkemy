@@ -1,6 +1,8 @@
 import { useState } from "react";
 export const Card = ({
+  deleteCard,
   data: {
+    _id,
     title,
     createdAt,
     user: { userName },
@@ -20,7 +22,15 @@ export const Card = ({
 
   return (
     <div className="card">
-      <div className="close">x</div>
+      <div
+        className="close"
+        onClick={() => {
+          deleteCard(_id);
+        }}
+      >
+        {" "}
+        closex
+      </div>
       <h3>{title}</h3>
       <h6>{dateTime}</h6>
       <h5>{userName}</h5>
