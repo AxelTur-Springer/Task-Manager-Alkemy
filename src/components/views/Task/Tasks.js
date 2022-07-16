@@ -61,6 +61,9 @@ export const Tasks = () => {
     if (tasks.length > 0) {
       setInitialLoad(false);
     } else {
+      setTimeout(() => {
+        setInitialLoad(false);
+      }, 500);
     }
   }, [tasks]);
   //managing search
