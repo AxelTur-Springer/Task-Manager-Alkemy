@@ -64,7 +64,6 @@ export const Tasks = () => {
   //rendering
 
   const renderAllCards = () => {
-    console.log(renderList);
     return renderList?.map((data) => (
       <Card
         key={data._id}
@@ -154,12 +153,6 @@ export const Tasks = () => {
           {isPhone ? (
             !renderList?.length ? (
               <div>No hay tareas creadas</div>
-            ) : loading ? (
-              <>
-                <Skeleton height={90} />
-                <Skeleton height={90} />
-                <Skeleton height={90} />
-              </>
             ) : (
               <div className="list phone">{renderAllCards()}</div>
             )
@@ -167,12 +160,6 @@ export const Tasks = () => {
             <div className="list_group">
               {!renderList?.length ? (
                 <div> No hay tareas creadas</div>
-              ) : loading ? (
-                <>
-                  <Skeleton height={900} />
-                  <Skeleton height={90} />
-                  <Skeleton height={90} />
-                </>
               ) : (
                 <>
                   <div className="list">

@@ -10,13 +10,15 @@ export const tasksSuccess = (data) => ({
   type: TASKS_SUCCESS,
   payload: data,
 });
+
 export const tasksFailure = (error) => ({
   type: TASKS_FAILURE,
   payload: error,
 });
 
 export const getTasks = (path) => (dispatch) => {
-  fetch(`${API_ENDPOINT}/task/${path}`, {
+  dispatch(tasksRequest());
+  fetch(`${API_ENDPOINT}/task${path}`, {
     headers: {
       "content-type": "application/json",
       Authorization: "Bearer " + localStorage.getItem("token"),
@@ -30,6 +32,7 @@ export const getTasks = (path) => (dispatch) => {
       dispatch(tasksFailure(error));
     });
 };
+
 export const deleteTasks = (id) => (dispatch) => {
   fetch(`${API_ENDPOINT}/task/${id}`, {
     method: "DELETE",
@@ -76,6 +79,7 @@ export const editTaskStatus = (data) => (dispatch) => {
       dispatch(tasksFailure(error));
     });
 };
+
 export const addTasks = (values) => (dispatch) => {
   fetch(API_ENDPOINT + "/task", {
     method: "POST",
