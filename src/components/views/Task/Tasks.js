@@ -41,9 +41,23 @@ export const Tasks = () => {
 
   useEffect(() => {
     setList(tasks);
-    setRenderList(tasks);
+    setRenderList(
+      tasks
+        .filter((t) => {
+          return t.importance === "HIGH";
+        })
+        .concat(
+          tasks.filter((t) => {
+            return t.importance === "MEDIUM";
+          })
+        )
+        .concat(
+          tasks.filter((t) => {
+            return t.importance === "LOW";
+          })
+        )
+    );
   }, [tasks]);
-
   //managing search
   useEffect(() => {
     if (searchTerm) {
