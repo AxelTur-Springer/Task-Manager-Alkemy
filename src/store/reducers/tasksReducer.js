@@ -5,7 +5,7 @@ const initialState = {
   tasks: [],
   error: "",
 };
-export const taskReducer = (state = initialState, action) => {
+export const tasksReducer = (state = initialState, action) => {
   switch (action.type) {
     case TASKS_REQUEST:
       return {

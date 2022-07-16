@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Header } from "../../Header.js/Header";
 import { TaskForm } from "../../TaskForm/TaskForm";
 import { useResize } from "../../../hooks/useResize";
@@ -7,6 +8,7 @@ import debounce from "lodash.debounce";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "./Tasks.style.css";
+import { getTasks } from "../../../store/actions/taskActions";
 import {
   Radio,
   FormControl,
@@ -15,32 +17,34 @@ import {
   FormLabel,
 } from "@mui/material";
 
-const { REACT_APP_API_ENDPOINT: API_END_POINT } = process.env;
-
 export const Tasks = () => {
   const [list, setList] = useState(null);
   const [renderList, setRenderList] = useState(null);
   const [tasksFromWho, setTasksFromWho] = useState("ALL");
-  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const { isPhone } = useResize();
+  const dispatch = useDispatch();
 
+  // dispatching all tasks or only created by user
   useEffect(() => {
-    setLoading(true);
-    fetch(`${API_END_POINT}/task${tasksFromWho === "ME" ? "/me" : ""}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setList(data.result);
-        setRenderList(data.result);
-        setLoading(false);
-      });
+    dispatch(getTasks(tasksFromWho === "ME" ? "/me" : ""));
   }, [tasksFromWho]);
 
+  // bringing tasks from store
+  const { loading, error, tasks } = useSelector((state) => {
+    return state.tasksReducer;
+  });
+
+  useEffect(() => {
+    if (tasks?.length) {
+      setList(tasks);
+      setRenderList(tasks);
+    }
+  }, [tasks]);
+
+  if (error) return <div>Hay un error</div>;
+
+  //managing search
   useEffect(() => {
     if (searchTerm) {
       setRenderList(
@@ -53,6 +57,12 @@ export const Tasks = () => {
     }
   }, [searchTerm]);
 
+  const handleSearch = debounce((e) => {
+    setSearchTerm(e?.target?.value);
+  }, 1000);
+
+  //rendering
+
   const renderAllCards = () => {
     return renderList?.map((data) => <Card key={data._id} data={data} />);
   };
@@ -63,6 +73,7 @@ export const Tasks = () => {
       .map((data) => <Card key={data._id} data={data} />);
   };
 
+  //setting changes in input radius
   const handleChangeImportance = (e) => {
     if (e.currentTarget.value === "ALL") {
       setRenderList(list);
@@ -72,10 +83,6 @@ export const Tasks = () => {
       );
     }
   };
-
-  const handleSearch = debounce((e) => {
-    setSearchTerm(e?.target?.value);
-  }, 1000);
 
   return (
     <>

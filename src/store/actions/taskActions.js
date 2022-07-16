@@ -1,5 +1,6 @@
-const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env;
 import { TASKS_REQUEST, TASKS_SUCCESS, TASKS_FAILURE } from "../types";
+
+const { REACT_APP_API_ENDPOINT: API_ENDPOINT } = process.env;
 
 export const tasksRequest = () => ({
   type: TASKS_REQUEST,
