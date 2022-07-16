@@ -22,8 +22,8 @@ import {
 } from "@mui/material";
 
 export const Tasks = () => {
-  const [list, setList] = useState(null);
-  const [renderList, setRenderList] = useState(null);
+  const [list, setList] = useState([]);
+  const [renderList, setRenderList] = useState([]);
   const [tasksFromWho, setTasksFromWho] = useState("ALL");
   const [searchTerm, setSearchTerm] = useState("");
   const { isPhone } = useResize();
@@ -32,7 +32,7 @@ export const Tasks = () => {
   // dispatching all tasks or only created by user
   useEffect(() => {
     dispatch(getTasks(tasksFromWho === "ME" ? "/me" : ""));
-  }, [tasksFromWho]);
+  }, [tasksFromWho, dispatch]);
 
   // bringing tasks from store
   const { loading, error, tasks } = useSelector((state) => {
@@ -40,10 +40,9 @@ export const Tasks = () => {
   });
 
   useEffect(() => {
-    if (tasks?.length) {
-      setList(tasks);
-      setRenderList(tasks);
-    }
+    setList(tasks);
+    setRenderList(tasks);
+    console.log(tasks);
   }, [tasks]);
 
   //managing search
@@ -105,7 +104,6 @@ export const Tasks = () => {
   const handleEditCardStatus = (data) => dispatch(editTaskStatus(data));
 
   if (error) return <div>Hay un error</div>;
-  //console.log(renderList); ERROR WHEN deleting last task,gonna solve it after redux module
   return (
     <>
       <Header />

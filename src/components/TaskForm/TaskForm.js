@@ -3,10 +3,14 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { addTasks } from "../../store/actions/taskActions";
+import { useSelector, useDispatch } from "react-redux";
 
 const { REACT_APP_API_ENDPOINT: API_END_POINT } = process.env;
 
 export const TaskForm = () => {
+  const dispatch = useDispatch();
+
   const initialValues = {
     title: "",
     status: "",
@@ -14,22 +18,8 @@ export const TaskForm = () => {
     description: "",
   };
 
-  const onSubmit = () => {
-    fetch(API_END_POINT + "/task", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        task: values,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        resetForm();
-        toast("tu tarea se creo");
-      });
+  const onSubmit = (values) => {
+    dispatch(addTasks(values));
   };
 
   const validationSchema = Yup.object().shape({
