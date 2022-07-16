@@ -8,7 +8,11 @@ import debounce from "lodash.debounce";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "./Tasks.style.css";
-import { getTasks, deleteTasks } from "../../../store/actions/taskActions";
+import {
+  getTasks,
+  deleteTasks,
+  editTaskStatus,
+} from "../../../store/actions/taskActions";
 import {
   Radio,
   FormControl,
@@ -63,7 +67,12 @@ export const Tasks = () => {
 
   const renderAllCards = () => {
     return renderList?.map((data) => (
-      <Card key={data._id} data={data} deleteCard={handleDelete} />
+      <Card
+        key={data._id}
+        editCardStatus={handleEditCardStatus}
+        data={data}
+        deleteCard={handleDelete}
+      />
     ));
   };
 
@@ -71,7 +80,12 @@ export const Tasks = () => {
     return renderList
       ?.filter((data) => data.status === text)
       .map((data) => (
-        <Card key={data._id} data={data} deleteCard={handleDelete} />
+        <Card
+          key={data._id}
+          editCardStatus={handleEditCardStatus}
+          data={data}
+          deleteCard={handleDelete}
+        />
       ));
   };
 
@@ -88,8 +102,10 @@ export const Tasks = () => {
   const handleDelete = (id) => {
     dispatch(deleteTasks(id));
   };
-  if (error) return <div>Hay un error</div>;
+  const handleEditCardStatus = (data) => dispatch(editTaskStatus(data));
 
+  if (error) return <div>Hay un error</div>;
+  //console.log(renderList); ERROR WHEN deleting last task,gonna solve it after redux module
   return (
     <>
       <Header />

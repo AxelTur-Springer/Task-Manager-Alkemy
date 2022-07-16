@@ -48,3 +48,34 @@ export const deleteTasks = (id) => (dispatch) => {
       dispatch(tasksFailure(error));
     });
 };
+
+export const editTaskStatus = (data) => (dispatch) => {
+  const statusArray = ["NEW", "IN PROGRESS", "FINISHED"];
+  const newStatusIndex =
+    statusArray.indexOf(data.status) > 1
+      ? 0
+      : statusArray.indexOf(data.status) + 1;
+  dispatch(tasksRequest());
+  fetch(`${API_ENDPOINT}/task/${data._id}`, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+    body: JSON.stringify({
+      task: {
+        title: data.title,
+        importance: data.importance,
+        status: statusArray[newStatusIndex],
+        description: data.description,
+      },
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      dispatch(getTasks(""));
+    })
+    .catch((error) => {
+      dispatch(tasksFailure(error));
+    });
+};

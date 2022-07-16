@@ -1,6 +1,7 @@
 import { useState } from "react";
 export const Card = ({
   deleteCard,
+  editCardStatus,
   data: {
     _id,
     title,
@@ -10,6 +11,7 @@ export const Card = ({
     status,
     importance,
   },
+  data,
 }) => {
   const [showMore, SetShowMore] = useState(false);
   const dateTime = new Date(createdAt).toLocaleString() + " hs.";
@@ -29,12 +31,16 @@ export const Card = ({
         }}
       >
         {" "}
-        closex
+        x
       </div>
       <h3>{title}</h3>
       <h6>{dateTime}</h6>
       <h5>{userName}</h5>
-      <button className={status.toLowerCase()} type="button">
+      <button
+        className={status.toLowerCase()}
+        onClick={() => editCardStatus(data)}
+        type="button"
+      >
         {status.toLowerCase()}
       </button>
       <button className={importance.toLowerCase()} type="button">
