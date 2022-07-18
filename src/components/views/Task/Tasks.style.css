@@ -17,6 +17,7 @@ width:21.8em;
   background-color: #f3f3f3;
   border-radius: var(--global-border-radius);
   padding: 10px;
+  margin-top: 1em;
 }
 
 #tasks .wrapper_list h2 {
@@ -24,12 +25,12 @@ width:21.8em;
   margin: 0;
 }
 .list {
-  width: 33.33%;
   border-radius: 5px;
-  padding: 10px;
+  padding: 1em 10px;
   background-color: white;
   box-shadow: 0px 8px 5px 2px lightgray;
-
+  width: 90%;
+  margin: 1em auto;
 }
 
 #tasks .wrapper_list .list_group {
@@ -54,6 +55,7 @@ width:21.8em;
   position: relative;
   transition: transform 0.2s ease-out;
   word-wrap: break-word;
+
 }
 #tasks .card .close {
   cursor: pointer;
@@ -139,5 +141,14 @@ cursor: pointer;
   }
   .wrapper_list {
     max-width: 59%;
+    min-width: 59%;
+    margin-top: 0em;
+
+
   }
+  .list {
+    width: 33.33%;
+  }
+  
 }
+
