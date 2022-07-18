@@ -44,7 +44,7 @@ export const Tasks = () => {
     setList(tasks);
     setRenderList(
       tasks
-        .filter((t) => {
+        ?.filter((t) => {
           return t.importance === "HIGH";
         })
         .concat(
@@ -58,7 +58,7 @@ export const Tasks = () => {
           })
         )
     );
-    if (tasks.length > 0) {
+    if (tasks?.length > 0) {
       setInitialLoad(false);
     } else {
       setTimeout(() => {
