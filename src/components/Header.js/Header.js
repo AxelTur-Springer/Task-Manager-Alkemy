@@ -26,7 +26,7 @@ export const Header = () => {
             Donar
           </button>
         </div>
-        <div className="black"> Tareas creadas: {tasks?.length}</div>
+        <div className="black"> Tareas: {tasks?.length}</div>
         <div>{localStorage.getItem("userName")}</div>
         <div onClick={handleLogout}>x</div>
       </div>
