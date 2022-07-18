@@ -157,20 +157,21 @@ export const Tasks = () => {
                 />
               </RadioGroup>
             </FormControl>
+
             <div className="search">
               <input
                 type="text"
                 placeholder=" Buscar por titulo..."
                 onChange={handleSearch}
               />
+              <select name="importance" onChange={handleChangeImportance}>
+                <option value="">Selecionar una prioridad</option>
+                <option value="ALL">Todas</option>
+                <option value="LOW">Baja</option>
+                <option value="MEDIUM">Media</option>
+                <option value="HIGH">Alta</option>
+              </select>
             </div>
-            <select name="importance" onChange={handleChangeImportance}>
-              <option value="">Selecionar una prioridad</option>
-              <option value="ALL">Todas</option>
-              <option value="LOW">Baja</option>
-              <option value="MEDIUM">Media</option>
-              <option value="HIGH">Alta</option>
-            </select>
           </div>
 
           {!initialLoad ? (

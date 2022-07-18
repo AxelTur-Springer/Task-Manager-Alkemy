@@ -32,3 +32,11 @@
     color:red;
     font-size: 14px;
   }
+  
+  .task-form button {
+    background-color: #f15c2f;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 8px 30px;
+    border-radius: 4px;
+  }

@@ -1,6 +1,7 @@
 import "./Header.style.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import GoScrumlogo from "./GoScrumlogo.png";
 export const Header = () => {
   const navigate = useNavigate();
 
@@ -16,12 +17,14 @@ export const Header = () => {
   };
   return (
     <header>
-      <span>GO SCRUM</span>
+      <div className="logo-image-cont">
+        <img src={GoScrumlogo} alt="" />
+      </div>
       <div className="wrapper_right_header">
         <div>
-          <button
-            onClick={() => navigate("/donate", { replace: true })}
-          ></button>
+          <button onClick={() => navigate("/donate", { replace: true })}>
+            Donar
+          </button>
         </div>
         <div className="black"> Tareas creadas: {tasks?.length}</div>
         <div>{localStorage.getItem("userName")}</div>

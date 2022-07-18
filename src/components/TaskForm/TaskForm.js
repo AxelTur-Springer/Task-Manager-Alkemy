@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addTasks } from "../../store/actions/taskActions";
 import { useSelector, useDispatch } from "react-redux";
+import { height } from "@mui/system";
 
 const { REACT_APP_API_ENDPOINT: API_END_POINT } = process.env;
 
@@ -22,14 +23,12 @@ export const TaskForm = () => {
     dispatch(addTasks(values));
     resetForm();
   };
-
+  const campoOblig = "*Campo obligatorio*";
   const validationSchema = Yup.object().shape({
-    title: Yup.string()
-      .min(6, "aca va mensaje, min caracter is 6")
-      .required("Aca va Error"),
-    status: Yup.string().required("aca puede ir una variale tmb"),
-    importance: Yup.string().required("*campo obli*"),
-    description: Yup.string().required("*campo obli*"),
+    title: Yup.string().min(6, "min caracter is 6").required(campoOblig),
+    status: Yup.string().required(campoOblig),
+    importance: Yup.string().required(campoOblig),
+    description: Yup.string().required(campoOblig),
   });
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
   const {
@@ -47,7 +46,7 @@ export const TaskForm = () => {
       <h2>Crear Tarea</h2>
       <p>Crea tus tareas</p>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="input-boxes">
           <div>
             <input
               name="title"
@@ -99,6 +98,7 @@ export const TaskForm = () => {
         </div>
         <div>
           <textarea
+            style={{ resize: "none", minHeight: "10em" }}
             name="description"
             placeholder="Description"
             onChange={handleChange}

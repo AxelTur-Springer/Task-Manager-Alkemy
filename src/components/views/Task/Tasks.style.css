@@ -1,38 +1,58 @@
 #tasks {
   padding: 20px 15px 5px;
+  min-height:calc(100vh); 
+}
+#tasks input , #tasks select{
+  border: none;
+  padding: 10px;
+  border: solid 1px rgb(158, 157, 157);
+  border-radius: 8px;
+  width: 20.2em;
+
+}
+#tasks select{
+width:21.8em;
+}
+#tasks .wrapper_list {
+  background-color: #f3f3f3;
+  border-radius: var(--global-border-radius);
+  padding: 10px;
 }
 
-#tasks .wrapper_list {
-  background-color: #fafafa;
-  border-radius: var(--global-border-radius);
-  height: calc(100vh - 100px);
-}
 #tasks .wrapper_list h2 {
-  font-size: 1rem;
+  font-size: 1.5rem;
   margin: 0;
 }
 .list {
   width: 33.33%;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0px 8px 5px 2px lightgray;
+
 }
 
 #tasks .wrapper_list .list_group {
   display: flex;
   flex-direction: row;
   gap: 5px 10px;
+  padding-top: 20px;
 }
 #tasks .wrapper_list .list_group .list h4 {
   font-size: 1.2rem;
   margin: 0 0 5px;
 }
+.filters .search input{
+  margin-right: 1em;
+}
 #tasks .card {
-  background-color: #fff;
-  border: var(--global--border);
+  background-color: rgb(255, 255, 255);
+  border: solid 2px rgb(168, 167, 167);
   border-radius: 12px;
   margin-bottom: 0.8rem;
   padding: 0.8rem 1.1rem 0.9rem;
   position: relative;
   transition: transform 0.2s ease-out;
-  border: solid red;
   word-wrap: break-word;
 }
 #tasks .card .close {
@@ -42,37 +62,72 @@
   top: 10px;
   font-size: 18px;
 }
+#tasks .card > * {
+  margin: 4px;
+  }
+  #tasks .card button{
+    border: none;
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+
 #tasks .card h3 {
   font-size: 1rem;
   font-weight: 700;
   margin: 0 0 0.2rem;
 }
-#tasks .card button.finished {
+
+#tasks .card button.new {
   background-color: #1ec876;
-  border-color: #1ec876;
+  color: white;
+}
+#tasks .card button.new:hover {
+background-color: red;
+color: black;
+cursor: pointer;
+}
+
+#tasks .card button.progress {
+  background-color: #1e7bc8;
+  color: white;
+}
+#tasks .card button.progress:hover {
+  background-color: red;
+  color: black;
+  cursor: pointer;
+}
+
+#tasks .card button.finished {
+  background-color: #f37ee9;
+  color: white;
 }
 #tasks .card button.finished:hover {
-  background-color: white;
-  border-color: #1ec876;
+  background-color: red;
+  color: black;
+  cursor: pointer;
 }
+
+
+
 #tasks .card button.low {
   background-color: #007bff;
-  border-color: #007bff;
+  color: white;
+
 }
-#tasks .card button.low:hover {
-  background-color: white;
-  border-color: #007bff;
-}
-#tasks .card button.medium,
-#tasks .card button.progress {
+
+#tasks .card button.medium {
   background-color: #fbde3f;
-  border-color: #fbde3f;
   color: black;
 }
-#tasks .card button.medium:hover,
-#tasks .card button.progress:hover {
-  background-color: black;
-  color: #fbde3f;
+
+#tasks .card button.high {
+  background-color: #f15c2f;
+  color: rgb(255, 255, 255);
+}
+
+.filters{
+  display: flex;
+  justify-content: space-between;
 }
 @media screen and (min-width: 900px) {
   #tasks {
@@ -80,9 +135,9 @@
   }
   .task-form {
     flex: none;
-    width: 50%;
+    width: 40%;
   }
   .wrapper_list {
-    width: 50%;
+    max-width: 59%;
   }
 }
